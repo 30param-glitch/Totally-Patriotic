@@ -18,56 +18,23 @@ body{
 
 /* Sidebar */
 .sidebar{
-  button 
-    padding: 12px 24px;
-    margin: 6px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 15px;
-    letter-spacing: 0.5px;
-    cursor: pointer;
-    background: linear-gradient(145deg, #1e3c72, #2a5298);
-    color: white;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.25);
-    transition: all 0.2s ease;
+  width:200px;
+  background:#1e3a8a;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  gap:15px;
 }
-
-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.35);
-}
-
-button:active {
-    transform: translateY(0);
-}
-
 
 .sidebar button{
- button {
-    padding: 12px 24px;
-    margin: 6px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 15px;
-    letter-spacing: 0.5px;
-    cursor: pointer;
-    background: linear-gradient(145deg, #1e3c72, #2a5298);
-    color: white;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.25);
-    transition: all 0.2s ease;
+  padding:12px;
+  font-weight:bold;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  background:#3b82f6;
+  color:#fff;
 }
-
-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.35);
-}
-
-button:active {
-    transform: translateY(0);
-}
-
 
 .main{
   flex:1;
@@ -281,81 +248,13 @@ drawChess();
 }
 }
 
-  if (!isLegalMove(fromRow, fromCol, toRow, toCol)) {
-    alert("Illegal move!");
-    return;
-}
-
-
-
-function isLegalMove(fr, fc, tr, tc) {
-    const piece = board[fr][fc];
-    const target = board[tr][tc];
-
-    if (!piece) return false;
-
-    // Cannot capture your own piece
-    if (target && piece.color === target.color) return false;
-
-    const rowDiff = tr - fr;
-    const colDiff = tc - fc;
-
-  function pathClear(fr, fc, tr, tc) {
-    let stepR = Math.sign(tr - fr);
-    let stepC = Math.sign(tc - fc);
-
-    let r = fr + stepR;
-    let c = fc + stepC;
-
-    while (r !== tr || c !== tc) {
-        if (board[r][c]) return false;
-        r += stepR;
-        c += stepC;
-    }
-
-    return true;
-}
-
-
-    switch (piece.type) {
-
-        case "pawn":
-            if (piece.color === "white") {
-                if (fc === tc && rowDiff === -1 && !target) return true;
-                if (Math.abs(colDiff) === 1 && rowDiff === -1 && target) return true;
-            } else {
-                if (fc === tc && rowDiff === 1 && !target) return true;
-                if (Math.abs(colDiff) === 1 && rowDiff === 1 && target) return true;
-            }
-            return false;
-
-        case "rook":
-            if (fr === tr || fc === tc)
-                return pathClear(fr, fc, tr, tc);
-            return false;
-
-        case "bishop":
-            if (Math.abs(rowDiff) === Math.abs(colDiff))
-                return pathClear(fr, fc, tr, tc);
-            return false;
-
-        case "queen":
-            if (fr === tr || fc === tc ||
-                Math.abs(rowDiff) === Math.abs(colDiff))
-                return pathClear(fr, fc, tr, tc);
-            return false;
-
-        case "knight":
-            return (Math.abs(rowDiff) === 2 && Math.abs(colDiff) === 1) ||
-                   (Math.abs(rowDiff) === 1 && Math.abs(colDiff) === 2);
-
-        case "king":
-            return Math.abs(rowDiff) <= 1 && Math.abs(colDiff) <= 1;
-    }
-
-    return false;
-}
-
+function isLegalMove(sr,sc,tr,tc){
+if(sr===tr&&sc===tc) return false;
+let piece=board[sr][sc];
+let target=board[tr][tc];
+if(!piece) return false;
+if(target && ((piece===piece.toUpperCase())==(target===target.toUpperCase()))) return false;
+let dr=tr-sr, dc=tc-sc;
 
 switch(piece.toLowerCase()){
 case "p":
@@ -483,21 +382,12 @@ clearInterval(snakeInterval);
 snakeInterval=setInterval(drawSnake,100);
 }
 
-document.addEventListener("keydown", e => {
-
-    if (e.key === "w" && direction !== "down")
-        direction = "up";
-
-    if (e.key === "s" && direction !== "up")
-        direction = "down";
-
-    if (e.key === "a" && direction !== "right")
-        direction = "left";
-
-    if (e.key === "d" && direction !== "left")
-        direction = "right";
+document.addEventListener("keydown",e=>{
+if(e.key==="ArrowUp"&&dy===0){dx=0;dy=-20;}
+if(e.key==="ArrowDown"&&dy===0){dx=0;dy=20;}
+if(e.key==="ArrowLeft"&&dx===0){dx=-20;dy=0;}
+if(e.key==="ArrowRight"&&dx===0){dx=20;dy=0;}
 });
-
 
 function drawSnake(){
 ctx.clearRect(0,0,400,400);
@@ -523,11 +413,3 @@ ctx.fillRect(food.x,food.y,20,20);
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
