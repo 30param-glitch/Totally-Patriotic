@@ -76,38 +76,6 @@ header{
 }
 .light{background:#3b82f6;}
 .dark{background:#1e3a8a;}
-
-/* PROFESSIONAL DIFFICULTY BUTTONS */
-.chess-difficulty{
-  margin-top:10px;
-  display:flex;
-  justify-content:center;
-  gap:12px;
-}
-.diff-btn{
-  padding:10px 22px;
-  font-weight:700;
-  border-radius:30px;
-  border:2px solid white;
-  background:linear-gradient(135deg,#2563eb,#1e3a8a);
-  color:white;
-  cursor:pointer;
-  transition:all 0.25s ease;
-  letter-spacing:1px;
-}
-.diff-btn:hover{
-  transform:translateY(-2px);
-  box-shadow:0 6px 15px rgba(0,0,0,0.4);
-}
-.diff-btn.active{
-  background:linear-gradient(135deg,#ff4b4b,#b22234);
-  border-color:#fff;
-}
-#chessStatus{
-  margin-top:15px;
-  font-size:28px;
-  font-weight:700;
-}
 </style>
 </head>
 
@@ -132,9 +100,9 @@ header{
   <div id="chess" class="game-card">
     <h2>♟ Chess vs AI</h2>
     <div class="chess-difficulty">
-      <button class="diff-btn active" onclick="setChessDifficulty('easy',this)">EASY</button>
-      <button class="diff-btn" onclick="setChessDifficulty('medium',this)">MEDIUM</button>
-      <button class="diff-btn" onclick="setChessDifficulty('hard',this)">HARD</button>
+      <button onclick="setChessDifficulty('easy')">EASY</button>
+      <button onclick="setChessDifficulty('medium')">MEDIUM</button>
+      <button onclick="setChessDifficulty('hard')">HARD</button>
     </div>
     <div id="chessboard"></div>
     <p id="chessStatus"></p>
@@ -156,10 +124,10 @@ function showMath(){
 /* ======================
       CHESS
 ====================== */
-const chessBoard=document.getElementById("chessboard");
-const chessStatus=document.getElementById("chessStatus");
+const chessBoard = document.getElementById("chessboard");
+const chessStatus = document.getElementById("chessStatus");
 
-let board=[
+let board = [
 ["r","n","b","q","k","b","n","r"],
 ["p","p","p","p","p","p","p","p"],
 ["","","","","","","",""],
@@ -171,8 +139,8 @@ let board=[
 ];
 
 let selected=null;
-let gameOver=false;
-let aiDifficulty="easy";
+let whiteTurn=true;
+let aiDifficulty="medium";
 
 const symbols={
 r:"♜",n:"♞",b:"♝",q:"♛",k:"♚",p:"♟",
@@ -188,14 +156,13 @@ function drawChess(){
       sq.dataset.row=r;
       sq.dataset.col=c;
       sq.textContent=symbols[board[r][c]]||"";
-      if(!gameOver) sq.onclick=clickChess;
+      sq.onclick=clickChess;
       chessBoard.appendChild(sq);
     }
   }
 }
 
 function clickChess(){
-  if(gameOver) return;
   let r=parseInt(this.dataset.row);
   let c=parseInt(this.dataset.col);
 
@@ -206,8 +173,8 @@ function clickChess(){
   }else{
     let [sr,sc]=selected;
     if(isLegalMove(sr,sc,r,c,true)){
-      if(board[r][c]==="k"){ endGame(true); return; }
       movePiece(sr,sc,r,c);
+      whiteTurn=false;
       setTimeout(aiMove,300);
     }else{
       chessStatus.textContent="Illegal move!";
@@ -222,25 +189,25 @@ function movePiece(sr,sc,tr,tc){
   board[sr][sc]="";
 }
 
-function isEnemy(p,t){
-  if(!t) return false;
-  return (p===p.toUpperCase()&&t===t.toLowerCase())||
-         (p===p.toLowerCase()&&t===t.toUpperCase());
+function isEnemy(piece,target){
+  if(!target) return false;
+  return (piece===piece.toUpperCase() && target===target.toLowerCase()) ||
+         (piece===piece.toLowerCase() && target===target.toUpperCase());
 }
 
 function pathClear(sr,sc,tr,tc){
   let dr=Math.sign(tr-sr);
   let dc=Math.sign(tc-sc);
   let r=sr+dr,c=sc+dc;
-  while(r!=tr||c!=tc){
+  while(r!=tr || c!=tc){
     if(board[r][c]!="") return false;
-    r+=dr;c+=dc;
+    r+=dr; c+=dc;
   }
   return true;
 }
 
 function isLegalMove(sr,sc,tr,tc,checkTurn=false){
-  if(sr===tr&&sc===tc) return false;
+  if(sr===tr && sc===tc) return false;
   let piece=board[sr][sc];
   let target=board[tr][tc];
   if(!piece) return false;
@@ -251,46 +218,53 @@ function isLegalMove(sr,sc,tr,tc,checkTurn=false){
 
   switch(piece.toLowerCase()){
     case "p":
-      let dir=piece==="P"?-1:1;
-      let start=piece==="P"?6:1;
-      if(dc===0&&!target){
+      let dir = piece==="P"?-1:1;
+      let startRow = piece==="P"?6:1;
+      if(dc===0 && !target){
         if(dr===dir) return true;
-        if(sr===start&&dr===2*dir&&!board[sr+dir][sc]) return true;
+        if(sr===startRow && dr===2*dir && !board[sr+dir][sc]) return true;
       }
-      if(Math.abs(dc)===1&&dr===dir&&isEnemy(piece,target)) return true;
+      if(Math.abs(dc)===1 && dr===dir && isEnemy(piece,target)) return true;
       return false;
+
     case "r":
-      if(sr===tr||sc===tc) return pathClear(sr,sc,tr,tc);
+      if(sr===tr || sc===tc) return pathClear(sr,sc,tr,tc);
       return false;
+
     case "n":
-      return (Math.abs(dr)===2&&Math.abs(dc)===1)||(Math.abs(dr)===1&&Math.abs(dc)===2);
+      return (Math.abs(dr)===2 && Math.abs(dc)===1) ||
+             (Math.abs(dr)===1 && Math.abs(dc)===2);
+
     case "b":
       if(Math.abs(dr)===Math.abs(dc)) return pathClear(sr,sc,tr,tc);
       return false;
+
     case "q":
-      if(sr===tr||sc===tc||Math.abs(dr)===Math.abs(dc)) return pathClear(sr,sc,tr,tc);
+      if(sr===tr || sc===tc || Math.abs(dr)===Math.abs(dc))
+        return pathClear(sr,sc,tr,tc);
       return false;
+
     case "k":
-      return Math.abs(dr)<=1&&Math.abs(dc)<=1;
+      return Math.abs(dr)<=1 && Math.abs(dc)<=1;
   }
   return false;
 }
 
-function setChessDifficulty(level,btn){
+function setChessDifficulty(level){
   aiDifficulty=level;
-  document.querySelectorAll(".diff-btn").forEach(b=>b.classList.remove("active"));
-  btn.classList.add("active");
+  chessStatus.textContent="AI set to "+level.toUpperCase();
 }
 
 function aiMove(){
-  if(gameOver) return;
   let moves=[];
   for(let r=0;r<8;r++){
     for(let c=0;c<8;c++){
-      if(board[r][c]&&board[r][c]===board[r][c].toLowerCase()){
+      if(board[r][c] && board[r][c]===board[r][c].toLowerCase()){
         for(let tr=0;tr<8;tr++){
           for(let tc=0;tc<8;tc++){
-            if(isLegalMove(r,c,tr,tc,false)) moves.push([r,c,tr,tc]);
+            if(isLegalMove(r,c,tr,tc,false)){
+              moves.push([r,c,tr,tc]);
+            }
           }
         }
       }
@@ -299,26 +273,21 @@ function aiMove(){
 
   if(moves.length>0){
     let move;
-    if(aiDifficulty==="hard"){
-      let captures=moves.filter(m=>board[m[2]][m[3]]!="");
-      move=captures.length?captures[Math.floor(Math.random()*captures.length)]
-                          :moves[Math.floor(Math.random()*moves.length)];
-    }else{
+    if(aiDifficulty==="easy"){
       move=moves[Math.floor(Math.random()*moves.length)];
+    }else if(aiDifficulty==="medium"){
+      move=moves[Math.floor(Math.random()*moves.length)];
+    }else{
+      let captures=moves.filter(m=>board[m[2]][m[3]]!="");
+      move=captures.length>0?
+           captures[Math.floor(Math.random()*captures.length)]:
+           moves[Math.floor(Math.random()*moves.length)];
     }
-
-    if(board[move[2]][move[3]]==="K"){ endGame(false); return; }
-
     movePiece(...move);
   }
 
+  whiteTurn=true;
   drawChess();
-}
-
-function endGame(userWon){
-  gameOver=true;
-  chessStatus.textContent=userWon?"YOU WIN":"YOU LOSE";
-  chessStatus.style.fontSize="40px";
 }
 
 drawChess();
@@ -326,6 +295,8 @@ drawChess();
 
 </body>
 </html>
+
+
 
 
 
