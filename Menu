@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Totally Patriotic</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to bottom, #b22234 0%, #b22234 33%, white 33%, white 66%, #3c3b6e 66%, #3c3b6e 100%);
+        color: white;
+        text-align: center;
+    }
+
+    header {
+        padding: 20px;
+        font-size: 40px;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px black;
+    }
+
+    nav button {
+        margin: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        background: white;
+        color: #3c3b6e;
+        font-weight: bold;
+        border-radius: 5px;
+    }
+
+    .game {
+        display: none;
+        padding: 20px;
+    }
+
+    canvas {
+        background: black;
+        margin-top: 20px;
+    }
+
+    #chessboard {
+        display: grid;
+        grid-template-columns: repeat(8, 60px);
+        grid-template-rows: repeat(8, 60px);
+        margin: 20px auto;
+    }
+
+    .square {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        cursor: pointer;
+    }
+
+    .light { background: #f0d9b5; }
+    .dark { background: #b58863; }
+</style>
+</head>
+
+<body>
+
+<header>🇺🇸 Totally Patriotic 🇺🇸</header>
+
+<nav>
+    <button onclick="showGame('chess')">Chess</button>
+    <button onclick="showGame('snake')">Snake</button>
+    <button onclick="showGame('wordle')">Wordle</button>
+    <button onclick="showGame('clicker')">Reaction Game</button>
+</nav>
+
+<!-- CHESS -->
+<div id="chess" class="game">
+    <h2>♟ Chess</h2>
+    <div id="chessboard"></div>
+</div>
+
+<!-- SNAKE -->
+<div id="snake" class="game">
+    <h2>🐍 Snake</h2>
+    <canvas id="snakeCanvas" width="400" height="400"></canvas>
+</div>
+
+<!-- WORDLE -->
+<div id="wordle" class="game">
+    <h2>🔤 Wordle</h2>
+    <input type="text" id="guessInput" maxlength="5">
+    <button onclick="checkGuess()">Guess</button>
+    <div id="wordleOutput"></div>
+</div>
+
+<!-- CLICKER -->
+<div id="clicker" class="game">
+    <h2>🎮 Reaction Click Game</h2>
+    <p>Click as fast as you can in 5 seconds!</p>
+    <button onclick="startClickGame()">Start</button>
+    <h3 id="clickScore">Score: 0</h3>
+</div>
+
+<script>
+function showGame(id) {
+    document.querySelectorAll('.game').forEach(g => g.style.display = 'none');
+    document.getElementById(id).style.display = 'block';
+}
+
+/* ---------------- CHESS ---------------- */
+
+const board = document.getElementById("chessboard");
+const pieces = [
+    "♜","♞","♝","♛","♚","♝","♞","♜",
+    "♟","♟","♟","♟","♟","♟","♟","♟",
+    "","","","","","","","",
+    "","","","","","","","",
+    "","","","","","","","",
+    "","","","","","","","",
+    "♙","♙","♙","♙","♙","♙","♙","♙",
+    "♖","♘","♗","♕","♔","♗","♘","♖"
+];
+
+let selected = null;
+
+pieces.forEach((piece, i) => {
+    const square = document.createElement("div");
+    square.className = "square " + ((Math.floor(i/8)+i)%2==0?"light":"dark");
+    square.textContent = piece;
+    square.onclick = () => {
+        if(selected === null && square.textContent !== ""){
+            selected = square;
+        } else if(selected){
+            square.textContent = selected.textContent;
+            selected.textContent = "";
+            selected = null;
+        }
+    };
+    board.appendChild(square);
+});
+
+/* ---------------- SNAKE ---------------- */
+
+const canvas = document.getElementById("snakeCanvas");
+const ctx = canvas.getContext("2d");
+
+let snake = [{x:200,y:200}];
+let dx = 20;
+let dy = 0;
+let food = {x:100,y:100};
+
+document.addEventListener("keydown", e=>{
+    if(e.key==="ArrowUp"){dx=0;dy=-20;}
+    if(e.key==="ArrowDown"){dx=0;dy=20;}
+    if(e.key==="ArrowLeft"){dx=-20;dy=0;}
+    if(e.key==="ArrowRight"){dx=20;dy=0;}
+});
+
+function drawSnake(){
+    ctx.clearRect(0,0,400,400);
+    ctx.fillStyle="lime";
+    snake.forEach(s=>ctx.fillRect(s.x,s.y,20,20));
+
+    ctx.fillStyle="red";
+    ctx.fillRect(food.x,food.y,20,20);
+
+    let head = {x:snake[0].x+dx,y:snake[0].y+dy};
+    snake.unshift(head);
+
+    if(head.x===food.x && head.y===food.y){
+        food.x=Math.floor(Math.random()*20)*20;
+        food.y=Math.floor(Math.random()*20)*20;
+    } else {
+        snake.pop();
+    }
+}
+setInterval(drawSnake,100);
+
+/* ---------------- WORDLE ---------------- */
+
+const secret = "USAUS";
+function checkGuess(){
+    let guess = document.getElementById("guessInput").value.toUpperCase();
+    let output = "";
+    for(let i=0;i<5;i++){
+        if(guess[i]===secret[i]){
+            output += "🟩";
+        } else if(secret.includes(guess[i])){
+            output += "🟨";
+        } else {
+            output += "⬜";
+        }
+    }
+    document.getElementById("wordleOutput").innerText += guess+" "+output+"\n";
+}
+
+/* ---------------- CLICK GAME ---------------- */
+
+let score=0;
+let clicking=false;
+
+function startClickGame(){
+    score=0;
+    clicking=true;
+    document.getElementById("clickScore").innerText="Score: 0";
+    setTimeout(()=>clicking=false,5000);
+}
+
+document.getElementById("clicker").addEventListener("click",()=>{
+    if(clicking){
+        score++;
+        document.getElementById("clickScore").innerText="Score: "+score;
+    }
+});
+</script>
+
+</body>
+</html>
