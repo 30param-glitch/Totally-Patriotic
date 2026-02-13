@@ -5,63 +5,101 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Totally Patriotic</title>
 
+<!-- Google Fonts for Professional Look -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
+* { box-sizing: border-box; margin:0; padding:0; font-family: 'Roboto', sans-serif; }
+
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to bottom, #b22234 0%, #b22234 50%, #1e3a8a 50%, #1e3a8a 100%);
-    color: white;
-    text-align: center;
+  background: linear-gradient(to bottom, #b22234 0%, #b22234 50%, #1e3a8a 50%, #1e3a8a 100%);
+  color: #fff;
+  min-height: 100vh;
 }
 
 header {
-    padding:20px;
-    font-size:40px;
-    font-weight:bold;
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 48px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 20px 0;
 }
 
 nav button {
-    margin:10px;
-    padding:10px 20px;
-    font-size:16px;
-    border:none;
-    cursor:pointer;
-    background:#1e3a8a;
-    color:white;
-    border-radius:5px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #1e3a8a;
+  color: #fff;
+  transition: background 0.3s, transform 0.2s;
 }
 
-.game { display:none;padding:20px; }
-
-#chessboard {
-    display:grid;
-    grid-template-columns:repeat(8,60px);
-    grid-template-rows:repeat(8,60px);
-    margin:20px auto;
+nav button:hover {
+  background: #3b82f6;
+  transform: translateY(-2px);
 }
 
-.square {
-    width:60px;
-    height:60px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:32px;
-    cursor:pointer;
+.container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
 }
 
-.light { background:#3b82f6; }
-.dark { background:#1e3a8a; }
+.game-card {
+  background: rgba(255,255,255,0.05);
+  border-radius: 12px;
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  text-align: center;
+}
 
-canvas { background:black;margin-top:20px; }
+.game-card h2 {
+  margin-bottom: 20px;
+  font-size: 32px;
+}
+
+button.play-btn {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border:none;
+  border-radius:8px;
+  background:#b22234;
+  color:#fff;
+  cursor:pointer;
+  transition: background 0.3s;
+}
+
+button.play-btn:hover {
+  background:#ff4b4b;
+}
+
+#snakeCanvas {
+  background: #111;
+  border-radius: 12px;
+  margin-top: 20px;
+}
 
 #reactionBox {
-    width:200px;
-    height:200px;
-    background:red;
-    margin:20px auto;
-    display:none;
-    cursor:pointer;
+  width:200px;
+  height:200px;
+  margin:20px auto;
+  border-radius: 12px;
+  display:none;
+  cursor:pointer;
 }
 </style>
 </head>
@@ -70,134 +108,63 @@ canvas { background:black;margin-top:20px; }
 <header>🇺🇸 Totally Patriotic 🇺🇸</header>
 
 <nav>
-<button onclick="showGame('chess')">Chess</button>
-<button onclick="showGame('snake')">Snake</button>
-<button onclick="showGame('wordle')">Wordle</button>
-<button onclick="showGame('reaction')">Reaction</button>
+  <button onclick="showGame('snake')">Snake</button>
+  <button onclick="showGame('reaction')">Reaction</button>
+  <button onclick="showGame('wordle')">Wordle</button>
 </nav>
 
-<!-- CHESS -->
-<div id="chess" class="game">
-<h2>♟ Chess vs AI</h2>
-<div id="chessboard"></div>
-<p id="chessStatus"></p>
-</div>
+<div class="container">
 
 <!-- SNAKE -->
-<div id="snake" class="game">
+<div id="snake" class="game-card game">
 <h2>🐍 Snake</h2>
-<button onclick="startSnake()">Start</button>
+<button class="play-btn" onclick="startSnake()">Start</button>
 <canvas id="snakeCanvas" width="400" height="400"></canvas>
 <p id="snakeStatus"></p>
 </div>
 
-<!-- WORDLE -->
-<div id="wordle" class="game">
-<h2>🔤 Play Real Wordle</h2>
-<a href="https://www.nytimes.com/games/wordle/index.html" target="_blank">
-<button>Open Official Wordle</button>
-</a>
-</div>
-
 <!-- REACTION -->
-<div id="reaction" class="game">
+<div id="reaction" class="game-card game">
 <h2>🎯 Reaction Game</h2>
-<button onclick="startReaction()">Start</button>
+<button class="play-btn" onclick="startReaction()">Start</button>
 <div id="reactionBox"></div>
 <p id="reactionScore"></p>
 </div>
 
-<!-- LOAD CHESS.JS FIRST -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+<!-- WORDLE -->
+<div id="wordle" class="game-card game">
+<h2>🔤 Wordle</h2>
+<p>Click below to play the official Wordle:</p>
+<a href="https://www.nytimes.com/games/wordle/index.html" target="_blank">
+<button class="play-btn">Open Wordle</button>
+</a>
+</div>
+
+</div>
 
 <script>
-function showGame(id){
-document.querySelectorAll('.game').forEach(g=>g.style.display='none');
-document.getElementById(id).style.display='block';
-}
-
 /* =====================
-        CHESS
+        PAGE NAVIGATION
 ===================== */
-
-const chessBoard = document.getElementById("chessboard");
-const chessStatus = document.getElementById("chessStatus");
-
-let game = new Chess();
-let selected = null;
-
-function drawBoard(){
-chessBoard.innerHTML="";
-let board = game.board();
-
-for(let r=0;r<8;r++){
-for(let c=0;c<8;c++){
-let square=document.createElement("div");
-square.className="square "+((r+c)%2==0?"light":"dark");
-square.dataset.square=String.fromCharCode(97+c)+(8-r);
-
-let piece=board[r][c];
-if(piece) square.textContent=getSymbol(piece);
-
-square.onclick=handleMove;
-chessBoard.appendChild(square);
-}}
+function showGame(id){
+  document.querySelectorAll(".game").forEach(g=>g.style.display="none");
+  document.getElementById(id).style.display="block";
 }
-
-function getSymbol(piece){
-const symbols={
-p:["♟","♙"],r:["♜","♖"],n:["♞","♘"],
-b:["♝","♗"],q:["♛","♕"],k:["♚","♔"]
-};
-return piece.color==="b"?symbols[piece.type][0]:symbols[piece.type][1];
-}
-
-function handleMove(e){
-if(game.turn()!=="w") return;
-
-if(!selected){
-selected=e.target.dataset.square;
-}else{
-let move=game.move({
-from:selected,
-to:e.target.dataset.square,
-promotion:"q"
-});
-
-selected=null;
-
-if(move){
-drawBoard();
-setTimeout(aiMove,300);
-}else{
-chessStatus.textContent="Illegal move!";
-}
-}
-}
-
-function aiMove(){
-let moves=game.moves();
-if(moves.length===0) return;
-let move=moves[Math.floor(Math.random()*moves.length)];
-game.move(move);
-drawBoard();
-}
-
-drawBoard();
+showGame("snake");
 
 /* =====================
         SNAKE
 ===================== */
-
 let snakeInterval;
 const canvas=document.getElementById("snakeCanvas");
 const ctx=canvas.getContext("2d");
-let snake,dx,dy,food;
+let snake=[],dx=0,dy=0,food={};
 
 function startSnake(){
 snake=[{x:200,y:200}];
-dx=20;dy=0;
+dx=20; dy=0;
 food={x:100,y:100};
+document.getElementById("snakeStatus").textContent="";
 clearInterval(snakeInterval);
 snakeInterval=setInterval(drawSnake,100);
 }
@@ -211,7 +178,6 @@ if(e.key==="ArrowRight"&&dx===0){dx=20;dy=0;}
 
 function drawSnake(){
 ctx.clearRect(0,0,400,400);
-
 let head={x:snake[0].x+dx,y:snake[0].y+dy};
 
 if(head.x<0||head.x>=400||head.y<0||head.y>=400||
@@ -240,7 +206,6 @@ ctx.fillRect(food.x,food.y,20,20);
 /* =====================
      REACTION GAME
 ===================== */
-
 let reactionScore=0;
 let reactionActive=false;
 let canClick=false;
@@ -274,9 +239,7 @@ canClick=true;
 }
 
 document.getElementById("reactionBox").onclick=function(){
-if(!reactionActive) return;
-
-if(canClick){
+if(reactionActive && canClick){
 reactionScore++;
 document.getElementById("reactionScore").textContent="Score: "+reactionScore;
 this.style.background="red";
@@ -284,10 +247,7 @@ canClick=false;
 nextGreen();
 }
 };
-
-showGame("chess");
 </script>
+
 </body>
 </html>
-
-
