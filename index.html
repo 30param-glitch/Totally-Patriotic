@@ -15,8 +15,6 @@ body{
   min-height:100vh;
   display:flex;
 }
-
-/* Sidebar */
 .sidebar{
   width:200px;
   background:#1e3a8a;
@@ -25,7 +23,6 @@ body{
   flex-direction:column;
   gap:15px;
 }
-
 .sidebar button{
   padding:12px;
   font-weight:bold;
@@ -36,19 +33,13 @@ body{
   color:#fff;
   transition:background 0.3s;
 }
-
-.sidebar button:hover{
-  background:#2563eb;
-}
-
-/* Main content */
+.sidebar button:hover{ background:#2563eb; }
 .main{
   flex:1;
   padding:20px;
   max-width:900px;
   margin:auto;
 }
-
 header{
   text-align:center;
   padding:40px 20px;
@@ -57,32 +48,6 @@ header{
   letter-spacing:2px;
   text-shadow:2px 2px 6px rgba(0,0,0,0.4);
 }
-
-nav{
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:15px;
-  padding:20px 0;
-}
-
-nav button{
-  padding:12px 24px;
-  font-size:16px;
-  font-weight:bold;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  background:#1e3a8a;
-  color:#fff;
-  transition: background 0.3s, transform 0.2s;
-}
-
-nav button:hover{
-  background:#3b82f6;
-  transform:translateY(-2px);
-}
-
 .game-card{
   background: rgba(255,255,255,0.05);
   border-radius:12px;
@@ -91,41 +56,15 @@ nav button:hover{
   box-shadow:0 4px 12px rgba(0,0,0,0.3);
   text-align:center;
 }
-
-.game-card h2{
-  margin-bottom:20px;
-  font-size:32px;
-}
-
-button.play-btn{
-  padding:12px 24px;
-  font-size:16px;
-  font-weight:bold;
-  border:none;
-  border-radius:8px;
-  background:#b22234;
-  color:#fff;
-  cursor:pointer;
-  transition: background 0.3s;
-}
-
-button.play-btn:hover{
-  background:#ff4b4b;
-}
-
-#snakeCanvas, #chessboard{
-  background:#111;
-  border-radius:12px;
-  margin-top:20px;
-}
-
 #chessboard{
   display:grid;
   grid-template-columns:repeat(8,60px);
   grid-template-rows:repeat(8,60px);
   justify-content:center;
+  background:#111;
+  border-radius:12px;
+  margin-top:20px;
 }
-
 .square{
   width:60px;
   height:60px;
@@ -135,24 +74,8 @@ button.play-btn:hover{
   font-size:32px;
   cursor:pointer;
 }
-
 .light{background:#3b82f6;}
 .dark{background:#1e3a8a;}
-
-#reactionBox{
-  width:200px;
-  height:200px;
-  margin:20px auto;
-  border-radius:12px;
-  display:none;
-  cursor:pointer;
-}
-.chess-difficulty{
-  margin-top:10px;
-  display:flex;
-  justify-content:center;
-  gap:10px;
-}
 </style>
 </head>
 
@@ -168,65 +91,27 @@ button.play-btn:hover{
 
 <div id="home" class="game-card game">
   <h2>Welcome!</h2>
-  <p>
-  Totally Patriotic provides an <strong>all-American experience</strong> in learning.
-  We offer fun games and activities designed as an alternative to the "liberal" public education system,
-  focusing on engaging students while teaching problem-solving and strategy.
-  </p>
+  <p>Totally Patriotic provides an all-American experience in learning.</p>
 </div>
 
-<!-- Math panel (games inside) -->
 <div id="math" class="game-card game" style="display:none;">
   <h2>Math & Games</h2>
 
-  <!-- CHESS -->
   <div id="chess" class="game-card">
-  <h2>♟ Chess vs AI</h2>
-
-  <!-- REPLACE OLD DIFFICULTY BUTTONS WITH THIS -->
-  <div class="chess-difficulty">
-    <button class="diff-btn" onclick="setChessDifficulty('easy')">EASY</button>
-    <button class="diff-btn" onclick="setChessDifficulty('medium')">MEDIUM</button>
-    <button class="diff-btn" onclick="setChessDifficulty('hard')">HARD</button>
-  </div>
-
-  <div id="chessboard"></div>
-  <p id="chessStatus"></p>
-</div>
-
-
-  <!-- SNAKE -->
-  <div id="snake" class="game-card">
-    <h2>🐍 Snake</h2>
-    <button class="play-btn" onclick="startSnake()">Start</button>
-    <canvas id="snakeCanvas" width="400" height="400"></canvas>
-    <p id="snakeStatus"></p>
-  </div>
-
-  <!-- REACTION -->
-  <div id="reaction" class="game-card">
-    <h2>🎯 Reaction Game</h2>
-    <button class="play-btn" onclick="startReaction()">Start</button>
-    <div id="reactionBox"></div>
-    <p id="reactionScore"></p>
-  </div>
-
-  <!-- WORDLE -->
-  <div id="wordle" class="game-card">
-    <h2>🔤 Wordle</h2>
-    <p>Click below to play the official Wordle:</p>
-    <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank">
-      <button class="play-btn">Open Wordle</button>
-    </a>
+    <h2>♟ Chess vs AI</h2>
+    <div class="chess-difficulty">
+      <button onclick="setChessDifficulty('easy')">EASY</button>
+      <button onclick="setChessDifficulty('medium')">MEDIUM</button>
+      <button onclick="setChessDifficulty('hard')">HARD</button>
+    </div>
+    <div id="chessboard"></div>
+    <p id="chessStatus"></p>
   </div>
 </div>
 
 </div>
 
 <script>
-/* ======================
-      NAVIGATION
-====================== */
 function showHome(){
   document.querySelectorAll(".game-card.game").forEach(g=>g.style.display="none");
   document.getElementById("home").style.display="block";
@@ -248,16 +133,16 @@ let board = [
 ["","","","","","","",""],
 ["","","","","","","",""],
 ["","","","","","","",""],
-["","","","","","",""],
+["","","","","","","",""],
 ["P","P","P","P","P","P","P","P"],
 ["R","N","B","Q","K","B","N","R"]
 ];
 
-let selected = null;
-let whiteTurn = true;
-let aiDifficulty = 'medium'; // default
+let selected=null;
+let whiteTurn=true;
+let aiDifficulty="medium";
 
-const symbols = {
+const symbols={
 r:"♜",n:"♞",b:"♝",q:"♛",k:"♚",p:"♟",
 R:"♖",N:"♘",B:"♗",Q:"♕",K:"♔",P:"♙"
 };
@@ -266,13 +151,13 @@ function drawChess(){
   chessBoard.innerHTML="";
   for(let r=0;r<8;r++){
     for(let c=0;c<8;c++){
-      let square = document.createElement("div");
-      square.className = "square "+((r+c)%2==0?"light":"dark");
-      square.dataset.row=r;
-      square.dataset.col=c;
-      square.textContent = symbols[board[r][c]]||"";
-      square.onclick = clickChess;
-      chessBoard.appendChild(square);
+      let sq=document.createElement("div");
+      sq.className="square "+((r+c)%2==0?"light":"dark");
+      sq.dataset.row=r;
+      sq.dataset.col=c;
+      sq.textContent=symbols[board[r][c]]||"";
+      sq.onclick=clickChess;
+      chessBoard.appendChild(sq);
     }
   }
 }
@@ -287,11 +172,9 @@ function clickChess(){
     }
   }else{
     let [sr,sc]=selected;
-    if(isLegal(sr,sc,r,c)){
-      board[r][c]=board[sr][sc];
-      board[sr][sc]="";
+    if(isLegalMove(sr,sc,r,c,true)){
+      movePiece(sr,sc,r,c);
       whiteTurn=false;
-      drawChess();
       setTimeout(aiMove,300);
     }else{
       chessStatus.textContent="Illegal move!";
@@ -301,26 +184,70 @@ function clickChess(){
   }
 }
 
-function isLegal(sr,sc,tr,tc){
-  let piece=board[sr][sc];
-  let target=board[tr][tc];
-  if(piece==="P"){
-    if(sc==tc && tr==sr-1 && !target) return true;
-    if(sc==tc && sr==6 && tr==4 && !board[5][sc]) return true;
-    if(Math.abs(tc-sc)==1 && tr==sr-1 && target && target===target.toLowerCase()) return true;
-  }
-  if(piece==="R"){ if(sr==tr||sc==tc) return pathClear(sr,sc,tr,tc); }
-  if(piece==="N"){ if((Math.abs(sr-tr)==2 && Math.abs(sc-tc)==1) || (Math.abs(sr-tr)==1 && Math.abs(sc-tc)==2)) return true; }
-  return false;
+function movePiece(sr,sc,tr,tc){
+  board[tr][tc]=board[sr][sc];
+  board[sr][sc]="";
+}
+
+function isEnemy(piece,target){
+  if(!target) return false;
+  return (piece===piece.toUpperCase() && target===target.toLowerCase()) ||
+         (piece===piece.toLowerCase() && target===target.toUpperCase());
 }
 
 function pathClear(sr,sc,tr,tc){
   let dr=Math.sign(tr-sr);
   let dc=Math.sign(tc-sc);
-  let r=sr+dr;
-  let c=sc+dc;
-  while(r!=tr || c!=tc){ if(board[r][c]!="") return false; r+=dr; c+=dc; }
+  let r=sr+dr,c=sc+dc;
+  while(r!=tr || c!=tc){
+    if(board[r][c]!="") return false;
+    r+=dr; c+=dc;
+  }
   return true;
+}
+
+function isLegalMove(sr,sc,tr,tc,checkTurn=false){
+  if(sr===tr && sc===tc) return false;
+  let piece=board[sr][sc];
+  let target=board[tr][tc];
+  if(!piece) return false;
+  if(checkTurn && piece!==piece.toUpperCase()) return false;
+  if(target && !isEnemy(piece,target)) return false;
+
+  let dr=tr-sr, dc=tc-sc;
+
+  switch(piece.toLowerCase()){
+    case "p":
+      let dir = piece==="P"?-1:1;
+      let startRow = piece==="P"?6:1;
+      if(dc===0 && !target){
+        if(dr===dir) return true;
+        if(sr===startRow && dr===2*dir && !board[sr+dir][sc]) return true;
+      }
+      if(Math.abs(dc)===1 && dr===dir && isEnemy(piece,target)) return true;
+      return false;
+
+    case "r":
+      if(sr===tr || sc===tc) return pathClear(sr,sc,tr,tc);
+      return false;
+
+    case "n":
+      return (Math.abs(dr)===2 && Math.abs(dc)===1) ||
+             (Math.abs(dr)===1 && Math.abs(dc)===2);
+
+    case "b":
+      if(Math.abs(dr)===Math.abs(dc)) return pathClear(sr,sc,tr,tc);
+      return false;
+
+    case "q":
+      if(sr===tr || sc===tc || Math.abs(dr)===Math.abs(dc))
+        return pathClear(sr,sc,tr,tc);
+      return false;
+
+    case "k":
+      return Math.abs(dr)<=1 && Math.abs(dc)<=1;
+  }
+  return false;
 }
 
 function setChessDifficulty(level){
@@ -330,17 +257,13 @@ function setChessDifficulty(level){
 
 function aiMove(){
   let moves=[];
-  let chance=0.02; // medium default
-  if(aiDifficulty==='easy') chance=0.005;
-  if(aiDifficulty==='hard') chance=0.2;
-
   for(let r=0;r<8;r++){
     for(let c=0;c<8;c++){
       if(board[r][c] && board[r][c]===board[r][c].toLowerCase()){
         for(let tr=0;tr<8;tr++){
           for(let tc=0;tc<8;tc++){
-            if(board[tr][tc]=="" || Math.random()<0.01){
-              if(Math.random()<chance) moves.push([r,c,tr,tc]);
+            if(isLegalMove(r,c,tr,tc,false)){
+              moves.push([r,c,tr,tc]);
             }
           }
         }
@@ -349,113 +272,28 @@ function aiMove(){
   }
 
   if(moves.length>0){
-    let m=moves[Math.floor(Math.random()*moves.length)];
-    board[m[2]][m[3]]=board[m[0]][m[1]];
-    board[m[0]][m[1]]="";
+    let move;
+    if(aiDifficulty==="easy"){
+      move=moves[Math.floor(Math.random()*moves.length)];
+    }else if(aiDifficulty==="medium"){
+      move=moves[Math.floor(Math.random()*moves.length)];
+    }else{
+      let captures=moves.filter(m=>board[m[2]][m[3]]!="");
+      move=captures.length>0?
+           captures[Math.floor(Math.random()*captures.length)]:
+           moves[Math.floor(Math.random()*moves.length)];
+    }
+    movePiece(...move);
   }
+
   whiteTurn=true;
   drawChess();
 }
 
 drawChess();
-
-/* ======================
-      SNAKE
-====================== */
-let snakeInterval;
-const canvas=document.getElementById("snakeCanvas");
-const ctx=canvas.getContext("2d");
-let snake=[],dx=0,dy=0,food={};
-
-function startSnake(){
-snake=[{x:200,y:200}];
-dx=20; dy=0;
-food={x:100,y:100};
-document.getElementById("snakeStatus").textContent="";
-clearInterval(snakeInterval);
-snakeInterval=setInterval(drawSnake,100);
-}
-
-document.addEventListener("keydown",e=>{
-if(e.key==="ArrowUp"&&dy===0){dx=0;dy=-20;}
-if(e.key==="ArrowDown"&&dy===0){dx=0;dy=20;}
-if(e.key==="ArrowLeft"&&dx===0){dx=-20;dy=0;}
-if(e.key==="ArrowRight"&&dx===0){dx=20;dy=0;}
-});
-
-function drawSnake(){
-ctx.clearRect(0,0,400,400);
-let head={x:snake[0].x+dx,y:snake[0].y+dy};
-
-if(head.x<0||head.x>=400||head.y<0||head.y>=400||
-snake.some(s=>s.x===head.x&&s.y===head.y)){
-clearInterval(snakeInterval);
-document.getElementById("snakeStatus").textContent="Game Over!";
-return;
-}
-
-snake.unshift(head);
-
-if(head.x===food.x&&head.y===food.y){
-food.x=Math.floor(Math.random()*20)*20;
-food.y=Math.floor(Math.random()*20)*20;
-}else{
-snake.pop();
-}
-
-ctx.fillStyle="lime";
-snake.forEach(s=>ctx.fillRect(s.x,s.y,20,20));
-
-ctx.fillStyle="red";
-ctx.fillRect(food.x,food.y,20,20);
-}
-
-/* ======================
-     REACTION GAME
-====================== */
-let reactionScore=0;
-let reactionActive=false;
-let canClick=false;
-
-function startReaction(){
-reactionScore=0;
-reactionActive=true;
-canClick=false;
-document.getElementById("reactionScore").textContent="Score: 0";
-let box=document.getElementById("reactionBox");
-box.style.display="block";
-box.style.background="red";
-
-setTimeout(()=>{
-reactionActive=false;
-box.style.display="none";
-},10000);
-
-nextGreen();
-}
-
-function nextGreen(){
-if(!reactionActive) return;
-let delay=Math.random()*2000+1000;
-setTimeout(()=>{
-if(!reactionActive) return;
-let box=document.getElementById("reactionBox");
-box.style.background="green";
-canClick=true;
-},delay);
-}
-
-document.getElementById("reactionBox").onclick=function(){
-if(reactionActive && canClick){
-reactionScore++;
-document.getElementById("reactionScore").textContent="Score: "+reactionScore;
-this.style.background="red";
-canClick=false;
-nextGreen();
-}
-};
 </script>
 
 </body>
 </html>
+
 
