@@ -181,15 +181,19 @@ button.play-btn:hover{
 
   <!-- CHESS -->
   <div id="chess" class="game-card">
-    <h2>♟ Chess vs AI</h2>
-    <div class="chess-difficulty">
-      <button onclick="setChessDifficulty('easy')">EASY</button>
-      <button onclick="setChessDifficulty('medium')">MEDIUM</button>
-      <button onclick="setChessDifficulty('hard')">HARD</button>
-    </div>
-    <div id="chessboard"></div>
-    <p id="chessStatus"></p>
+  <h2>♟ Chess vs AI</h2>
+
+  <!-- REPLACE OLD DIFFICULTY BUTTONS WITH THIS -->
+  <div class="chess-difficulty">
+    <button class="diff-btn" onclick="setChessDifficulty('easy')">EASY</button>
+    <button class="diff-btn" onclick="setChessDifficulty('medium')">MEDIUM</button>
+    <button class="diff-btn" onclick="setChessDifficulty('hard')">HARD</button>
   </div>
+
+  <div id="chessboard"></div>
+  <p id="chessStatus"></p>
+</div>
+
 
   <!-- SNAKE -->
   <div id="snake" class="game-card">
