@@ -383,10 +383,10 @@ snakeInterval=setInterval(drawSnake,100);
 }
 
 document.addEventListener("keydown",e=>{
-if(e.key==="ArrowUp"&&dy===0){dx=0;dy=-20;}
-if(e.key==="ArrowDown"&&dy===0){dx=0;dy=20;}
-if(e.key==="ArrowLeft"&&dx===0){dx=-20;dy=0;}
-if(e.key==="ArrowRight"&&dx===0){dx=20;dy=0;}
+if(e.key==="W"&&dy===0){dx=0;dy=-20;}
+if(e.key==="S"&&dy===0){dx=0;dy=20;}
+if(e.key==="A"&&dx===0){dx=-20;dy=0;}
+if(e.key==="D"&&dx===0){dx=20;dy=0;}
 });
 
 function drawSnake(){
