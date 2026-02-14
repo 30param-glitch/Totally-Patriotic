@@ -102,10 +102,21 @@ header{
 
 <body>
 
+<!-- Sidebar -->
 <div class="sidebar">
-  <button onclick="showHome()">Home</button>
-  <button onclick="showMath()">Math</button>
+    <button class="blue-btn" onclick="showHome()">Home</button>
+    <button class="blue-btn" onclick="showMath()">Math</button>
 </div>
+
+<!-- Game buttons -->
+<button class="red-btn play-btn">Start Snake</button>
+<button class="red-btn play-btn">Reset</button>
+
+<!-- Chess difficulty buttons (already professional, keep class) -->
+<button class="diff-btn" onclick="setChessDifficulty('easy')">EASY</button>
+<button class="diff-btn" onclick="setChessDifficulty('medium')">MEDIUM</button>
+<button class="diff-btn" onclick="setChessDifficulty('hard')">HARD</button>
+
 
 <div class="main">
 <header>🇺🇸 Totally Patriotic 🇺🇸</header>
