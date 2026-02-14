@@ -410,6 +410,41 @@ ctx.fillStyle="red";
 ctx.fillRect(food.x,food.y,20,20);
 }
 
+  /* Base button style */
+button {
+    padding: 12px 26px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: linear-gradient(135deg, #1f2937, #111827);
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+/* Hover effect */
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+}
+
+/* Click effect */
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Optional: disabled style */
+button:disabled {
+    background: #6b7280;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+
 </script>
 </body>
 </html>
