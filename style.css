@@ -105,5 +105,10 @@ body {
     padding: 40px 20px;
 }
 
+<button class="blue-btn">Home</button>
+<button class="blue-btn">Math</button>
+<button class="red-btn play-btn">Start Game</button>
+
+
 
 
