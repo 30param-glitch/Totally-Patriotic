@@ -113,6 +113,18 @@ header{
 
 <body>
 
+<script>
+function showHome() {
+    document.getElementById("home").style.display = "block";
+    document.getElementById("math").style.display = "none";
+}
+
+function showMath() {
+    document.getElementById("home").style.display = "none";
+    document.getElementById("math").style.display = "block";
+}
+</script>
+
 <!-- Sidebar -->
 <div class="sidebar">
     <button class="blue-btn" onclick="showHome()">Home</button>
