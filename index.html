@@ -455,13 +455,68 @@ ctx.fillRect(food.x,food.y,20,20);
   <!-- All your HTML here (sidebar, sections, games) -->
 
   <!-- SCRIPT TAG AT THE VERY END -->
-  <script>
+<script>
     // All JS functions MUST be defined here
-    function startSnake() { ... }
-    function startReaction() { ... }
-    function setChessDifficulty(level) { ... }
-    function showHome() { ... }
-    function showMath() { ... }
+    function startSnake() {
+    snake = [{ x: 200, y: 200 }];
+    dx = 20;
+    dy = 0;
+    clearInterval(snakeInterval);
+    snakeInterval = setInterval(drawSnake, 100);
+}
+    function startReaction() {
+    reactionScore = 0;
+    timeLeft = 10;
+    document.getElementById("reactionScore").textContent = "Score: 0";
+    document.getElementById("reactionTimer").textContent = "Timer: 10";
+    let box = document.getElementById("reactionBox");
+    box.style.display = "block";
+    box.style.background = "red";
+    canClick = false;
+
+    setTimeout(() => {
+        box.style.background = "green";
+        canClick = true;
+        startTimer();
+    }, 1000);
+}
+
+function startTimer() {
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        document.getElementById("reactionTimer").textContent = "Timer: " + timeLeft;
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            canClick = false;
+        }
+    }, 1000);
+}
+
+document.getElementById("reactionBox").onclick = function () {
+    if (canClick) {
+        clearInterval(timerInterval);
+        reactionScore += timeLeft;
+        document.getElementById("reactionScore").textContent = "Score: " + reactionScore;
+        this.style.background = "red";
+        canClick = false;
+    }
+};
+    function setChessDifficulty(level, btn) {
+    aiDifficulty = level;
+    document.querySelectorAll(".diff-btn").forEach(b => b.classList.remove("active"));
+    if (btn) btn.classList.add("active");
+    chessStatus.textContent = "AI set to " + level.toUpperCase();
+}
+    function showHome() {
+    document.querySelectorAll(".game-card.game").forEach(g => g.style.display = "none");
+    document.getElementById("home").style.display = "block";
+}
+
+function showMath() {
+    document.querySelectorAll(".game-card.game").forEach(g => g.style.display = "none");
+    document.getElementById("math").style.display = "block";
+}
   </script>
 </body>
 
