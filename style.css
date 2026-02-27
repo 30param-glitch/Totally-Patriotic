@@ -1,163 +1,163 @@
-h1 {
-    font-size: 48px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    background: linear-gradient(90deg, #0a3d91, #b11226);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+/* ===============================
+   TOTALLY PATRIOTIC PREMIUM UI
+   Apple-Inspired Red & Blue Theme
+================================= */
+
+/* ---- GLOBAL RESET ---- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-h2 {
-    font-size: 28px;
-    font-weight: 600;
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                 "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, #f4f6fa, #e9eef8);
+    color: #1d1d1f;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ---- SIDEBAR ---- */
+.sidebar {
+    width: 240px;
+    background: #0a3d91; /* Patriotic Blue */
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    box-shadow: 4px 0 20px rgba(0,0,0,0.08);
+}
+
+.sidebar h2 {
+    color: white;
     margin-bottom: 20px;
-    color: #0a3d91;
+    font-weight: 600;
 }
 
-p {
-    font-size: 17px;
-    line-height: 1.6;
-    color: #555;
+/* ---- MAIN CONTENT ---- */
+.main-content {
+    flex: 1;
+    padding: 40px;
 }
 
-
-canvas {
-    border-radius: 18px;
-    box-shadow:
-        0 12px 30px rgba(0, 0, 0, 0.15);
+/* ---- CARD STYLE ---- */
+.game-card {
+    background: white;
+    padding: 30px;
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+    margin-bottom: 30px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-
-#chessBoard {
-    margin: 20px auto;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow:
-        0 15px 35px rgba(0, 0, 0, 0.15);
+.game-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.1);
 }
 
+.game-card h2 {
+    margin-bottom: 20px;
+    font-weight: 600;
+}
 
+/* ===============================
+   PREMIUM BUTTON SYSTEM
+================================= */
 
-/* Blue primary */
-.blue-btn {
+button {
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 12px 28px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    letter-spacing: 0.4px;
+    transition: all 0.25s ease;
+}
+
+/* ---- BLUE BUTTONS ---- */
+.blue-btn,
+.diff-btn {
     background: #0a3d91;
     color: white;
     box-shadow: 0 8px 18px rgba(10, 61, 145, 0.25);
 }
 
-.blue-btn:hover {
+.blue-btn:hover,
+.diff-btn:hover {
     background: #0f4fb8;
     transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(10, 61, 145, 0.35);
 }
 
-/* Red accent */
-.red-btn {
-    background: #b11226;
+/* ---- RED BUTTONS ---- */
+.red-btn,
+.play-btn {
+    background: #b22234;
     color: white;
-    box-shadow: 0 8px 18px rgba(177, 18, 38, 0.25);
+    box-shadow: 0 8px 18px rgba(178, 34, 52, 0.25);
 }
 
-.red-btn:hover {
+.red-btn:hover,
+.play-btn:hover {
     background: #cc1b31;
     transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(178, 34, 52, 0.35);
 }
 
-
-.card {
-    background: white;
-    border-radius: 22px;
-    padding: 30px;
-    margin: 40px auto;
-    max-width: 900px;
-    box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.08),
-        0 2px 8px rgba(0, 0, 0, 0.04);
-    transition: all 0.3s ease;
+/* ---- DISABLED BUTTON STYLE ---- */
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
 }
 
-.card:hover {
-    transform: translateY(-4px);
-    box-shadow:
-        0 20px 40px rgba(0, 0, 0, 0.12),
-        0 6px 14px rgba(0, 0, 0, 0.06);
+/* ---- CANVAS STYLING ---- */
+canvas {
+    margin-top: 20px;
+    border-radius: 18px;
+    background: #111;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
 }
 
-
-<div class="card">
-   <!-- game content -->
-</div>
-
-
-/* Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
-                 "Segoe UI", Roboto, sans-serif;
+/* ---- STATUS TEXT ---- */
+#snakeStatus,
+#reactionStatus {
+    margin-top: 15px;
+    font-weight: 500;
+    color: #b22234;
 }
 
-/* Body */
-body {
-    background: linear-gradient(180deg, #f5f7fa 0%, #ffffff 100%);
-    color: #1d1d1f;
-    text-align: center;
-    padding: 40px 20px;
+/* ---- SMOOTH FADE ANIMATION ---- */
+.fade-in {
+    animation: fadeIn 0.4s ease forwards;
 }
 
-<button class="blue-btn">Home</button>
-<button class="blue-btn">Math</button>
-<button class="red-btn play-btn">Start Game</button>
-
-
-/* =============================
-   PREMIUM PATRIOTIC BUTTONS
-============================= */
-
-/* Blue buttons (sidebar, general) */
-.blue-btn, .diff-btn {
-    background: #0a3d91; /* deep patriotic blue */
-    color: white;
-    padding: 12px 28px;
-    border-radius: 999px; /* pill-shaped for premium look */
-    border: none;
-    font-weight: 600;
-    font-size: 15px;
-    cursor: pointer;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
-    letter-spacing: 0.5px;
-    transition: all 0.25s ease;
-    box-shadow: 0 8px 18px rgba(10, 61, 145, 0.25); /* soft shadow */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* Hover effect */
-.blue-btn:hover, .diff-btn:hover {
-    background: #0f4fb8; /* lighter blue on hover */
-    transform: translateY(-2px);
-    box-shadow: 0 12px 20px rgba(10, 61, 145, 0.3);
-}
+/* ---- RESPONSIVE ---- */
+@media (max-width: 900px) {
+    body {
+        flex-direction: column;
+    }
 
-/* Red buttons (game actions: Start, Reset, etc.) */
-.red-btn, .play-btn {
-    background: #b22234; /* deep patriotic red */
-    color: white;
-    padding: 12px 28px;
-    border-radius: 999px; /* pill-shaped for premium look */
-    border: none;
-    font-weight: 600;
-    font-size: 15px;
-    cursor: pointer;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
-    letter-spacing: 0.5px;
-    transition: all 0.25s ease;
-    box-shadow: 0 8px 18px rgba(178, 34, 52, 0.25); /* soft shadow */
-}
+    .sidebar {
+        width: 100%;
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
 
-/* Hover effect */
-.red-btn:hover, .play-btn:hover {
-    background: #cc1b31; /* slightly brighter red on hover */
-    transform: translateY(-2px);
-    box-shadow: 0 12px 20px rgba(178, 34, 52, 0.3);
+    .main-content {
+        padding: 20px;
+    }
 }
 
 
