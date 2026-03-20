@@ -128,6 +128,7 @@ function showMath() {
 <div class="sidebar">
     <button class="blue-btn" onclick="showHome()">Home</button>
     <button class="blue-btn" onclick="showMath()">Math</button>
+    <button class="blue-btn" onclick="showSocial()">Social Studies</button>
 </div>
 
 
@@ -140,6 +141,11 @@ function showMath() {
 
 <div id="math" class="game-card game" style="display:none;">
   <h2>Math</h2>
+
+<div id="social" class="game-card game" style="display:none;">
+  <h2>Social Studies</h2>
+  <p>Welcome to Social Studies! More content coming soon 🇺🇸</p>
+</div>
 
   <!-- CHESS -->
   <div class="game-card">
@@ -194,6 +200,11 @@ function showHome(){
 function showMath(){
   document.querySelectorAll(".game").forEach(g=>g.style.display="none");
   document.getElementById("math").style.display="block";
+}
+
+function showSocial() {
+    document.querySelectorAll(".game-card.game").forEach(g => g.style.display = "none");
+    document.getElementById("social").style.display = "block";
 }
 
 /* ================= CHESS ================= */
