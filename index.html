@@ -147,10 +147,9 @@ function showMath() {
 
     <button onclick="restartChess()">Restart Game</button><br><br>
 
-    <!-- Chess difficulty buttons (already professional, keep class) -->
-<button class="diff-btn" onclick="setChessDifficulty('easy')">EASY</button>
-<button class="diff-btn" onclick="setChessDifficulty('medium')">MEDIUM</button>
-<button class="diff-btn" onclick="setChessDifficulty('hard')">HARD</button>
+<button class="diff-btn" onclick="setChessDifficulty('easy', this)">EASY</button>
+<button class="diff-btn" onclick="setChessDifficulty('medium', this)">MEDIUM</button>
+<button class="diff-btn" onclick="setChessDifficulty('hard', this)">HARD</button>
 
     <div id="chessboard"></div>
     <p id="chessStatus"></p>
