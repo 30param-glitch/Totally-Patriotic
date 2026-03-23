@@ -509,6 +509,19 @@ function showMath() {
     document.querySelectorAll(".game-card.game").forEach(g => g.style.display = "none");
     document.getElementById("math").style.display = "block";
 }
+
+function joinServer() {
+    const ip = document.getElementById("serverIP").value.trim();
+    const status = document.getElementById("serverStatus");
+
+    if (ip === "") {
+        status.textContent = "Please enter a server IP.";
+        return;
+    }
+
+    // Minecraft cannot be launched directly from browser
+    status.textContent = "To join: Open Minecraft → Multiplayer → Add Server → Enter: " + ip;
+}
   
 </script>
 </body>
