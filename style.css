@@ -42,6 +42,15 @@ body {
     padding: 40px;
 }
 
+.main {
+  display: flex;
+  flex-direction: column; /* THIS FIXES IT */
+  flex: 1;
+  padding: 20px;
+  max-width: 900px;
+  margin: auto;
+}
+
 /* ---- CARD STYLE ---- */
 .game-card {
     background: white;
