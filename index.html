@@ -210,15 +210,6 @@ function showMath() {
   <button class="blue-btn" onclick="openScienceLink()">Open Science Resource</button>
 </div>
 
-function showScience() {
-  document.querySelectorAll(".game-card.game").forEach(g => g.style.display = "none");
-  document.getElementById("science").style.display = "block";
-}
-
-function openScienceLink() {
-  window.open("https://www.nasa.gov", "_blank");
-}
-
 /* NAVIGATION */
 function showHome(){
   document.querySelectorAll(".game").forEach(g=>g.style.display="none");
@@ -232,6 +223,15 @@ function showMath(){
 function showSocial() {
     document.querySelectorAll(".game-card.game").forEach(g => g.style.display = "none");
     document.getElementById("social").style.display = "block";
+}
+
+function showScience() {
+  document.querySelectorAll(".game-card.game").forEach(g => g.style.display = "none");
+  document.getElementById("science").style.display = "block";
+}
+
+function openScienceLink() {
+  window.open("https://www.nasa.gov", "_blank");
 }
 
 /* ================= CHESS ================= */
