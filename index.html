@@ -129,6 +129,7 @@ function showMath() {
     <button class="blue-btn" onclick="showHome()">Home</button>
     <button class="blue-btn" onclick="showMath()">Math</button>
     <button class="blue-btn" onclick="showSocial()">Social Studies</button>
+    <button class="blue-btn" onclick="showScience()">Science</button>
 </div>
 
 
@@ -201,6 +202,22 @@ function showMath() {
 </div>
 
 <script>
+
+<div id="science" class="game-card game" style="display:none;">
+  <h2>Science</h2>
+  <p>Explore science resources and experiments 🔬</p>
+
+  <button class="blue-btn" onclick="openScienceLink()">Open Science Resource</button>
+</div>
+
+function showScience() {
+  document.querySelectorAll(".game-card.game").forEach(g => g.style.display = "none");
+  document.getElementById("science").style.display = "block";
+}
+
+function openScienceLink() {
+  window.open("https://www.nasa.gov", "_blank");
+}
 
 /* NAVIGATION */
 function showHome(){
