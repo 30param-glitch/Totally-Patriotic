@@ -182,10 +182,10 @@ function showMath() {
 </div>
 </div>
 
-<!-- SOCIAL (OUTSIDE MATH) -->
+<!-- SOCIAL -->
 <div id="social" class="game-card game" style="display:none;">
-      <h2>Social Studies</h2>
-      <p>Welcome to Social Studies! More content coming soon 🇺🇸</p>
+  <h2>Social Studies</h2>
+  <p>Welcome to Social Studies! More content coming soon 🇺🇸</p>
 
   <h3>🎮 Minecraft PvP Server</h3>
 
@@ -196,14 +196,21 @@ function showMath() {
   <p>Copy this IP and paste it into Minecraft</p>
 </div>
 
-<script>
-
+<!-- SCIENCE -->
 <div id="science" class="game-card game" style="display:none;">
   <h2>Science</h2>
   <p>Explore science resources and experiments 🔬</p>
 
-  <button class="blue-btn" onclick="openScienceLink()">Open Science Resource</button>
+  <button class="blue-btn" onclick="openScienceLink()">
+    Open Science Resource
+  </button>
 </div>
+
+<script>
+  function openScienceLink() {
+    window.open("https://example.com", "_blank"); // replace with your real link
+  }
+</script>
 
 /* NAVIGATION */
 function showHome(){
